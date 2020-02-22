@@ -1,0 +1,12 @@
+node{
+  stage('git checkout'){
+    git credentialsId: 'GITCredential', url: 'https://github.com/RSI1982/game-of-life.git'
+  }
+  stage('build and test'){
+    def mvnhome = tool name: 'mavenhome', type: 'maven'
+    sh "${mvnhome}/bin/mvn package"
+  }
+  stage('artifacts build'){
+  nexusPublisher nexusInstanceId: 'nexus125', nexusRepositoryId: 'gameoflife', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: '/var/lib/jenkins/workspace/gameoflife_git/target']], mavenCoordinate: [artifactId: 'apollo', groupId: 'bayer', packaging: 'war', version: '${BUILD_NUMBER}']]]
+  }
+}
