@@ -17,6 +17,8 @@ node{
     def mvnhome = tool name: 'mavenhome', type: 'maven'
     withSonarQubeEnv(credentialsId: 'sonarqube-token') {
     // some block
+    sh "${mvnhome}/bin/mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install"
+    sh "${mvnhome}/bin/mvn org.jacoco:jacoco-maven-plugin:prepare-agent clean install -Pcoverage-per-test"
     sh "${mvnhome}/bin/mvn sonar:sonar"
 }
   }
