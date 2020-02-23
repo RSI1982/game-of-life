@@ -13,4 +13,11 @@ node{
     mail bcc: '', body: '''Hello Developers,
     This is the status of your build job in jenkins ''', cc: '', from: '', replyTo: '', subject: 'job status', to: 'err.rakeshsingh@gmail.com'
   }
+  stage('sonarqube analysis'){
+    def mvnhome = tool name: 'mavenhome', type: 'maven'
+    withSonarQubeEnv(credentialsId: 'sonarqube-token') {
+    // some block
+    sh "${mvnhome}/bin/mvn sonar:sonar"
+}
+  }
 }
