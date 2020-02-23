@@ -9,4 +9,8 @@ node{
   stage('artifacts build'){
     nexusPublisher nexusInstanceId: 'nexus125', nexusRepositoryId: 'gameoflife', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: '/var/lib/jenkins/workspace/gameoflife_git/target/easyb/easyb_img03.jpg']], mavenCoordinate: [artifactId: 'apollo', groupId: 'bayer', packaging: 'JPG', version: '${BUILD_NUMBER}']]]
   }
+  stage('mail trigger'){
+    mail bcc: '', body: '''Hello Developers,
+    This is the status of your build job in jenkins ''', cc: '', from: '', replyTo: '', subject: 'job status', to: 'err.rakeshsingh@gmail.com'
+  }
 }
